@@ -1,11 +1,12 @@
-.recipe_img {
-  margin-top: 30px;
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 20px;
-  row-gap: 40px;
+.mb-4 {
+  font-family: "Rubik Doodle Shadow", system-ui;
+  font-size: 80px;
 }
-.recipe_img1, .recipe_img2, .recipe_img3, .recipe_img4,.recipe_img5,.recipe_img6 {
-  background-color: rgb(165, 165, 219); 
-  height: 200px;
+body {
+  background-image: url('https://wallpapercave.com/wp/wp3820395.jpg');
+  padding: 2rem;
+}
+.ingredients {
+  font-size: 30px;
+  font-family: "Jacques Francois Shadow", serif;
 }
