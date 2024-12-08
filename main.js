@@ -69,3 +69,33 @@ recipesContainer.addEventListener("click", (e) => {
     fetchRecipeDetails(recipeId);
   }
 });
+
+// Map displayed meal names to spoonacular "type" parameters
+const mealTypeMap = {
+  "Breakfast": "breakfast",
+  "Lunch": "main course",
+  "Dinner": "main course"
+};
+
+const mealSelect = document.getElementById("mealSelect");
+
+// Add event listener for meal category selection
+mealSelect.addEventListener("change", () => {
+  const selectedMeal = mealSelect.value;
+  const mealType = mealTypeMap[selectedMeal];
+
+  if (mealType) {
+    fetchRecipesByCategory(mealType);
+  }
+});
+
+// Fetch recipes by category (type) from spoonacular
+async function fetchRecipesByCategory(type) {
+  try {
+    const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?type=${type}&apiKey=e6cc794ae1da488ab458ef42e4be3338`);
+    const data = await response.json();
+    displayRecipes(data.results);
+  } catch (error) {
+    console.error("Error fetching category-based recipes:", error);
+  }
+}
