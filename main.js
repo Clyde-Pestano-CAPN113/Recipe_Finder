@@ -106,6 +106,6 @@ recipesContainer.addEventListener("click", (e) => {
 // Map displayed meal names to spoonacular "type" parameters
 const mealTypeMap = {
   "Breakfast": "breakfast",
-  "Lunch": "main course",
-  "Dinner": "main course"
+  "Main course": "main course",
+  "Appetizer": "appetizer"
 };
