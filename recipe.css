@@ -1,0 +1,11 @@
+.recipe_img {
+  margin-top: 30px;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 40px;
+}
+.recipe_img1, .recipe_img2, .recipe_img3, .recipe_img4,.recipe_img5,.recipe_img6 {
+  background-color: rgb(165, 165, 219); 
+  height: 200px;
+}
