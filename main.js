@@ -4,6 +4,8 @@ const searchBtn = document.getElementById("search-btn");
 const searchInput = document.getElementById("search-input");
 const recipesContainer = document.getElementById("recipes-container");
 const mealSelect = document.getElementById("mealSelect");
+const ingredientSelect = document.getElementById("ingredientSelect");
+const cuisineSelect = document.getElementById("cuisineSelect");
 
 // Bootstrap Modal Instance
 const recipeModal = new bootstrap.Modal(document.getElementById("recipeModal"));
@@ -11,19 +13,37 @@ const recipeModalLabel = document.getElementById("recipeModalLabel");
 const recipeDetails = document.getElementById("recipe-details");
 
 // Fetch recipes from API
-const fetchRecipes = async (query, type) => {
+const fetchRecipes = async (query) => {
   try {
     let url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=e6cc794ae1da488ab458ef42e4be3338`;
     
-    // Conditionally append qury parameter if provided
+    // If user typed a search query
     if (query) {
       url += `&query=${encodeURICompenent(query)}`;
     }
 
-    // If a meal type is selected, append it to the url
-    if (type) {
-      url += `&type=${encodeURIComponent(tyoe)}`;
+    // Get selected meal from dropdown and map to Spoonacular type
+    const selectedMeal = mealSelect.value; 
+    const mealType = mealTypeMap[selectedMeal]; 
+    if (mealType) {
+      url += `&type=${encodeURIComponent(mealType)}`;
     }
+
+    // NEW: Get chosen ingredient and cuisine
+    const chosenIngredient = ingredientSelect.value.trim();
+    const chosenCuisine = cuisineSelect.value.trim();
+
+    // If user selected an ingredient
+    if (chosenIngredient) {
+      // According to Spoonacular docs, use includeIngredients for specifying ingredients
+      url += `&includeIngredients=${encodeURIComponent(chosenIngredient)}`;
+    }
+
+    // If user selected a cuisine
+    if (chosenCuisine) {
+      // Spoonacular allows filtering by cuisine
+      url += `&cuisine=${encodeURIComponent(chosenCuisine)}`;
+    }  
 
     const response = await fetch(url);
     const data = await response.json();
@@ -73,9 +93,7 @@ const showModal = (recipe) => {
 // Event Listeners
 searchBtn.addEventListener("click", () => {
   const query = searchInput.value.trim();
-  const selectedMeal = mealSelect.values; // Get the selected meal option
-  const mealType = mealTypeMap[selectedMeal]; // Map to Spooncular type
-  fetchRecipes(query, mealType); // Call fetchRecipes with both query and mealType
+  fetchRecipes(query); // Call fetchRecipes with both query and mealType
 });
 
 recipesContainer.addEventListener("click", (e) => {
