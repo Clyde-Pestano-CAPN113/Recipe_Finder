@@ -19,7 +19,7 @@ const fetchRecipes = async (query) => {
     
     // If user typed a search query
     if (query) {
-      url += `&query=${encodeURICompenent(query)}`;
+      url += `&query=${encodeURIComponent(query)}`;
     }
 
     // Get selected meal from dropdown and map to Spoonacular type
