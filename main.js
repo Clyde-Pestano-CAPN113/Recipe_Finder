@@ -3,6 +3,7 @@
 const searchBtn = document.getElementById("search-btn");
 const searchInput = document.getElementById("search-input");
 const recipesContainer = document.getElementById("recipes-container");
+const mealSelect = document.getElementById("mealSelect");
 
 // Bootstrap Modal Instance
 const recipeModal = new bootstrap.Modal(document.getElementById("recipeModal"));
@@ -10,9 +11,21 @@ const recipeModalLabel = document.getElementById("recipeModalLabel");
 const recipeDetails = document.getElementById("recipe-details");
 
 // Fetch recipes from API
-const fetchRecipes = async (query) => {
+const fetchRecipes = async (query, type) => {
   try {
-    const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=e6cc794ae1da488ab458ef42e4be3338`);
+    let url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=e6cc794ae1da488ab458ef42e4be3338`;
+    
+    // Conditionally append qury parameter if provided
+    if (query) {
+      url += `&query=${encodeURICompenent(query)}`;
+    }
+
+    // If a meal type is selected, append it to the url
+    if (type) {
+      url += `&type=${encodeURIComponent(tyoe)}`;
+    }
+
+    const response = await fetch(url);
     const data = await response.json();
     displayRecipes(data.results);
   } catch (error) {
@@ -60,7 +73,9 @@ const showModal = (recipe) => {
 // Event Listeners
 searchBtn.addEventListener("click", () => {
   const query = searchInput.value.trim();
-  if (query) fetchRecipes(query);
+  const selectedMeal = mealSelect.values; // Get the selected meal option
+  const mealType = mealTypeMap[selectedMeal]; // Map to Spooncular type
+  fetchRecipes(query, mealType); // Call fetchRecipes with both query and mealType
 });
 
 recipesContainer.addEventListener("click", (e) => {
@@ -76,26 +91,3 @@ const mealTypeMap = {
   "Lunch": "main course",
   "Dinner": "main course"
 };
-
-const mealSelect = document.getElementById("mealSelect");
-
-// Add event listener for meal category selection
-mealSelect.addEventListener("change", () => {
-  const selectedMeal = mealSelect.value;
-  const mealType = mealTypeMap[selectedMeal];
-
-  if (mealType) {
-    fetchRecipesByCategory(mealType);
-  }
-});
-
-// Fetch recipes by category (type) from spoonacular
-async function fetchRecipesByCategory(type) {
-  try {
-    const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?type=${type}&apiKey=e6cc794ae1da488ab458ef42e4be3338`);
-    const data = await response.json();
-    displayRecipes(data.results);
-  } catch (error) {
-    console.error("Error fetching category-based recipes:", error);
-  }
-}
