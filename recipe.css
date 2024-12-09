@@ -1,12 +1,26 @@
 .mb-4 {
   font-family: "Rubik Doodle Shadow", system-ui;
   font-size: 80px;
+  text-align: center;
 }
 body {
-  background-image: url('https://wallpapercave.com/wp/wp3820395.jpg');
+  background-image: url('https://img.freepik.com/premium-photo/photo-different-colors-vegetables-cutting-board-vegetable-backgrounds-top-view_763111-42730.jpg?w=2000');
   padding: 2rem;
 }
 .ingredients {
   font-size: 30px;
   font-family: "Jacques Francois Shadow", serif;
+}
+.p1 {
+  margin-left: 0%;
+  font-size: 50px;
+  font-family: "Vast Shadow", serif;
+}
+.p2 {
+  margin-left: 0%;
+  font-size: 60px;
+  font-family: "Vast Shadow", serif;
+}
+footer {
+  text-align: center;
 }
